@@ -1,0 +1,295 @@
+//use class_db
+
+db.Users.insertMany(
+  [{
+    "userid": 1,
+    "username": "arya",
+    "mentorid": 1
+  },
+
+  {
+    "userid": 2,
+    "username": "karthi",
+    "mentorid": 2
+  },
+
+  {
+    "userid": 3,
+    "username": "aravin",
+    "mentorid": 3
+  },
+
+  {
+    "userid": 4,
+    "username": "surya",
+    "mentorid": 4
+  },
+
+  {
+    "userid": 5,
+    "username": "aryan",
+    "mentorid": 5
+  }
+  ]
+
+);
+
+db.Codekata.insertMany([
+  {
+    "userid": 1,
+    "totalproblems": 50,
+    "noofproblemssolved": 20
+  },
+
+  {
+    "userid": 2,
+    "totalproblems": 50,
+    "noofproblemssolved": 30
+  },
+
+  {
+    "userid": 3,
+    "totalproblems": 50,
+    "noofproblemssolved": 25
+  },
+
+  {
+    "userid": 4,
+    "totalproblems": 50,
+    "noofproblemssolved": 40
+  },
+
+  {
+    "userid": 5,
+    "totalproblems": 50,
+    "noofproblemssolved": 50
+  }
+]);
+
+db.Attendance.insertMany([
+  {
+    "userid": 1,
+    "present": true
+  },
+
+  {
+    "userid": 2,
+    "present": true
+  },
+
+  {
+    "userid": 3,
+    "present": false
+  },
+
+  {
+    "userid": 4,
+    "present": false
+  },
+
+  {
+    "userid": 5,
+    "present": true
+  },
+]);
+
+db.topic.insertMany([
+  {
+    "topicname": "reactjs",
+    "topicdate": "15 oct-2020"
+  },
+
+  {
+    "topicname": "nodejs",
+    "topicdate": "16 oct-2020"
+  },
+
+  {
+    "topicname": "javascript",
+    "topicdate": "17 oct-2020"
+  },
+
+  {
+    "topicname": "html",
+    "topicdate": "18 oct-2020"
+  },
+
+  {
+    "topicname": "bootstrap",
+    "topicdate": "19 oct-2020"
+  }
+]);
+
+db.tasks.insertMany([
+  {
+    "userid": 1,
+    "taskname": "reactjs",
+    "totaltasks": 20,
+    "tasksubmission": "submitted",
+    "taskmonth": "october"
+  },
+  {
+    "userid": 2,
+    "taskname": "nodejs",
+    "totaltasks": 20,
+    "tasksubmission": "submitted",
+    "taskmonth": "october"
+  },
+  {
+    "userid": 3,
+    "taskname": "css",
+    "totaltasks": 20,
+    "tasksubmission": "not submitted",
+    "taskmonth": "october"
+  },
+  {
+    "userid": 4,
+    "taskname": "javascript",
+    "totaltasks": 20,
+    "tasksubmission": "submitted",
+    "taskmonth": "october"
+  },
+  {
+    "userid": 5,
+    "taskname": "html",
+    "totaltasks": 20,
+    "tasksubmission": "not submitted",
+    "taskmonth": "october"
+  }
+]);
+
+db.company_drives.insertMany([
+  {
+    "companyname": "zoho",
+    "drivedate": new Date("2020-10-15"),
+    "appeared": "arya"
+  },
+  {
+    "companyname": "ibm",
+    "drivedate": new Date("2020-10-16"),
+    "appeared": "aravin"
+  },
+  {
+    "companyname": "google",
+    "drivedate": new Date("2020-10-18"),
+    "appeared": "varun"
+  },
+  {
+    "companyname": "cognizant",
+    "drivedate": new Date("2020-10-20"),
+    "appeared": "surya"
+  },
+  {
+    "companyname": "accenture",
+    "drivedate": new Date("2020-10-26"),
+    "appeared": "karthi"
+  },
+  {
+    "companyname": "freshworks",
+    "drivedate": new Date("2020-10-30"),
+    "appeared": "varsha"
+
+  }
+]);
+
+db.mentors.insertMany([
+  {
+    "mentorid": 1,
+    "mentorname": "arun",
+    "mentee_count": 10
+  },
+  {
+    "mentorid": 2,
+    "mentorname": "sourav",
+    "mentee_count": 16
+  },
+  {
+    "mentorid": 3,
+    "mentorname": "arav",
+    "mentee_count": 10
+  },
+  {
+    "mentorid": 4,
+    "mentorname": "barun",
+    "mentee_count": 18
+  },
+  {
+    "mentorid": 5,
+    "mentorname": "varun",
+    "mentee_count": 19
+  },
+]);
+
+//Find all the topics and tasks which are thought in the month of October
+db.topic.find(
+  {},
+  {
+    "topicname": 1,
+    "topicdate": 1,
+    
+    _id: 0,
+  }
+).pretty()
+
+
+db.tasks.find(
+  {},
+  {
+    
+    "taskmonth": 1,
+    "taskname": 1,
+    _id: 0,
+  }
+).pretty()
+
+//Find all the company drives which "appeared" between 15 oct-2020 and 31-oct-2020
+db.company_drives.find({
+  
+    $and: [
+      { drivedate: { $lte: new Date("2020-10-31") } },
+      { drivedate: { $gte: new Date("2020-10-15") } },
+      
+    ],
+    
+  }).pretty()
+
+//Find all the company drives and students who are "appeared" for the placement.
+db.company_drives.find(
+  {},
+  {
+    "companyname": 1,
+    "appeared": 1,
+    
+    _id: 0,
+  }
+).pretty()
+
+//Find the number of problems solved by the user in codekata
+db.Codekata.find(
+  {},
+  {
+    "noofproblemssolved": 1,
+    _id: 0,
+    "userid": 1,
+    "totalproblems": 1,
+  }
+).pretty()
+
+//Find all the mentors with who has the mentee's count more than 15
+db.mentors.find({
+  "mentee_count": {
+    $gt: 15,
+  },
+}).pretty()
+
+//Find the number of users who are absent and task is not submitted  between 15 oct-2020 and 31-oct-2020
+db.tasks.find(
+  
+  {"tasksubmission": "not submitted"},
+  {userid:1,tasksubmission:1}
+  
+).pretty()
+
+db.Attendance.find(
+  {present:false}
+  ).pretty()
